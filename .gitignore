@@ -10,4 +10,5 @@ nbproject
 vendor
 access
 composer.lock
+composer.phar
 node_modules

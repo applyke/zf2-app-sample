@@ -1,25 +1,7 @@
-*{
-    margin: 0;
-    padding: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+.kin-box{
+    padding: 10px;
+    border: 1px solid #ddd;
 }
-
-body{
-    font-size: 16px;
-    line-height: normal;
-    font-family: "Roboto", Arial, sans-serif;
-}
-
-
-/*COLOR*/
-nav {
-    background-color: #455A64;
-}
-footer.page-footer{
-    background-color: #37474F;
-}
-aside{
-    background-color: #78909C;
+.kin-box li {
+    list-style-type: none;
 }

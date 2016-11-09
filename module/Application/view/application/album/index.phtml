@@ -1,0 +1,39 @@
+<?php echo $this->partial('application/includes/flash_message.phtml'); ?>
+<?php echo $this->partial('application/includes/delete_modal.phtml'); ?>
+<?php //echo $this->partial('application/includes/filter/filter_gorizontal.phtml', array('filter' => $filter)); ?>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Albums List</div>
+    <div class="panel-body">
+
+        <a class="btn btn-primary" href="/album/create">Add Album</a>
+
+        <hr>
+        <table class="table table-hover">
+            <tbody>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Code</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            <?php foreach ($albums as $album): ?>
+                <tr>
+                    <td><?php echo $album->getId() ?></td>
+                    <td><?php echo $album->getTitle() ?></td>
+                    <td><?php echo $album->getCode()?></td>
+<!--                    <td>--><?php //echo $album->getStatus()?><!--</td>-->
+                    <td><?php echo $this->utils()->getStatus($album->getStatus()) ?></td>
+                    <td>
+                        <a class="btn btn-primary" href="/album/create/<?php echo $album->getId() ?>">Edit</a> |
+                        <a class="btn btn-primary" href="/album/details/<?php echo $album->getId() ?>">Details</a>
+                        <a class="btn btn-primary delete-button" data-url="/album/delete/<?php echo $album->getId() ?>">Delete Album</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+       
+    </div>
+</div>

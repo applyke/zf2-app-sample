@@ -1,0 +1,23 @@
+<?php echo $this->partial('application/includes/flash_message.phtml'); ?>
+<?php echo $this->partial('application/includes/delete_modal.phtml'); ?>
+<?php echo $this->partial('application/includes/filter/filter_gorizontal.phtml', array('filter' => $filter)); ?>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Image List</div>
+    <div class="panel-body">
+        <a class="btn btn-primary" href="/">Back To Home Page</a>
+        <div class="container"></div>
+        <hr>
+        <table class="table table-hover">
+            <?php foreach ($images as $image): ?>
+                <div class="col-md-4">
+                    <img class="img-responsive" src="<?php echo $image->getPath() ?>" alt="">
+                    <?php echo $image->getWidth() ?>*<?php echo $image->getHeight() ?>
+                </div>
+            <?php endforeach; ?>
+
+        </table>
+        <?php echo $paginator; ?>
+    </div>
+</div>
+</div>
