@@ -95,6 +95,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
+            'Application\Controller\Error' => Controller\Admin\ErrorController::class,
         ),
         'factories' => array(
             'Application\Controller\Album' => Factory\Controller\AlbumFactory::class,
@@ -120,6 +121,9 @@ return array(
                 ),
             )
         ),
+        'fixture' => array(
+            'Application_fixture' => __DIR__ . '/../src/Application/Fixture',
+        )
     ),
     'view_manager' => [
         'display_not_found_reason' => true,
@@ -139,5 +143,8 @@ return array(
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ],
 );

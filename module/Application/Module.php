@@ -42,17 +42,17 @@ class Module
         \Zend\Log\Logger::registerErrorHandler($serviceManager->get('logger'));
         \Zend\Log\Logger::registerExceptionHandler($serviceManager->get('logger'));
 
-        $sessionConfig = new \Zend\Session\Config\SessionConfig();
-        $sessionConfig->setOptions($config['session']);
-        $sessionManager = new \Zend\Session\SessionManager($sessionConfig);
-        \Zend\Session\Container::setDefaultManager($sessionManager);
+//        $sessionConfig = new \Zend\Session\Config\SessionConfig();
+//        $sessionConfig->setOptions($config['session']);
+//        $sessionManager = new \Zend\Session\SessionManager($sessionConfig);
+//        \Zend\Session\Container::setDefaultManager($sessionManager);
 
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         $request = $e->getRequest();
         if (!$request instanceof \Zend\Console\Request) {
-            define('HOST', $request->getUri()->getHost());
+           // define('HOST', $request->getUri()->getHost());
             $eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'onRoute'), -1);    // -1 - very low priority - system callback will be run first
             $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'onDispatchError'), -1);
             $eventManager->attach(MvcEvent::EVENT_RENDER_ERROR, array($this, 'onRenderError'), -1);
@@ -85,14 +85,16 @@ class Module
         if (!$request instanceof \Zend\Console\Request) {
             $statusCode = $e->getApplication()->getResponse()->getStatusCode();
             if ($statusCode == 404) {
-                if (strpos($request->getUri(), '/api/') === false) {
+                if (strpos($request->getUri(), '/album/') === false) {
                     $e->getViewModel()->setTemplate('layout/404');
 
                     $routeMatch = $e->getRouteMatch();
+
+
                     if (is_object($routeMatch)) {
                         // render 404 error page
                         return $routeMatch
-                            ->setParam('controller', 'Application\Controller\Admin\Error')
+                            ->setParam('controller', '"Application\Controller\Admin\ErrorController')
                             ->setParam('action', 'error404');
                     }
                 }
@@ -129,7 +131,7 @@ class Module
 
         $errorHandler->err($msg);
 
-        if (strpos($e->getRequest()->getUri(), '/api/') === false) {
+        if (strpos($e->getRequest()->getUri(), '/albums/') === false) {
 
             $e->getViewModel()->setTemplate('layout/error');
 
@@ -137,9 +139,11 @@ class Module
             if (is_object($routeMatch)) {
                 // render 404 error page
                 return $e->getRouteMatch()
-                    ->setParam('controller', 'Application\Controller\Admin\Error')
+                    ->setParam('controller', '"Application\Controller\Admin\ErrorController')
                     ->setParam('action', 'error');
             }
         }
     }
+  
+  
 }

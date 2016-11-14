@@ -3,10 +3,11 @@
 namespace Application\Controller\Api;
 
 use Zend\View\Model\JsonModel;
+use Application\ApplicationTraits\DoctrineEntityManagerAwareTrait;
 
 class AbstractRestfulController extends \Zend\Mvc\Controller\AbstractRestfulController
 {
-
+    use DoctrineEntityManagerAwareTrait;
     const ERROR_PARAM_REQUIRED = 'Param is required';
 
     protected $jsonDecodeType = \Zend\Json\Json::TYPE_ARRAY;

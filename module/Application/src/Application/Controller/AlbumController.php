@@ -18,7 +18,6 @@ class AlbumController extends AbstractController
         $entityManager = $this->getEntityManager();
         /** @var \Application\Repository\AlbumRepository $albumRepository */
         $albumRepository = $entityManager->getRepository('\Application\Entity\Album');
-
         $all_albums = $albumRepository->findAll();
         return new ViewModel(array(
             'albums' => $all_albums,
@@ -39,6 +38,7 @@ class AlbumController extends AbstractController
                 return $this->notFound();
             }
         }
+
         $albumForm = new \Application\Form\AlbumForm('album', array(
             'album' => $album,
             'backBtnUrl' => $this->url()->fromRoute(
@@ -50,7 +50,6 @@ class AlbumController extends AbstractController
             ->bind($album);
         if ($this->getRequest()->isPost()) {
             $albumForm->setData($this->getRequest()->getPost());
-            $albumForm->remove('send');
             if ($albumForm->isValid()) {
                 $entityManager->persist($album);
                 $entityManager->flush();
@@ -80,6 +79,7 @@ class AlbumController extends AbstractController
         $filter = $paginationService->createFilter($this->getUrl());
         $images = $imageRepository->findByWithTotalCount(array('album_id' => $album->getId()), array('id' => 'ASC'), $this->getPageLimit(), $this->getPageOffset(), $this->getFilterDataFromRequest($filter));
         $imagesTotalCount = $imageRepository->getTotalCount();
+
         return new ViewModel(
             array(
                 'album' => $album,
@@ -88,6 +88,7 @@ class AlbumController extends AbstractController
                 'filter' => $filter,
             )
         );
+
     }
 
     public function deleteAction()

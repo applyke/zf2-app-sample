@@ -1,5 +1,6 @@
 <?php
 
+
 return array(
     'doctrine' => array(
         'connection' => array(
@@ -8,9 +9,9 @@ return array(
                 'params' => array(
                     'host' => 'localhost',
                     'port' => '3306',
-                    'user' => 'dbUsername',
-                    'password' => 'dbPassword',
-                    'dbname' => 'dbName',
+                    'user' => 'root',
+                    'password' => '123',
+                    'dbname' => 'galleryDBTest',
                     'charset' => 'UTF8'
                 )
             )
@@ -27,4 +28,4 @@ return array(
             )
         ),
     ),
-);
+ );

@@ -17,7 +17,6 @@ class AlbumsFactory implements FactoryInterface
         $entityManager = $serviceManager->get('doctrine.entitymanager.orm_default');
         $controller = new Controller();
         $controller->setEntityManager($entityManager);
-
         return $controller;
     }
 }

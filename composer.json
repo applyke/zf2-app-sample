@@ -14,8 +14,9 @@
     "require": {
         "php": ">=5.5",
         "zendframework/zendframework": "2.5.*",
-        "doctrine/doctrine-orm-module": "~0.11",
-        "doctrine/migrations": "~1.0"
+        "doctrine/doctrine-orm-module": "~0.7",
+        "doctrine/migrations": "~1.0",
+        "hounddog/doctrine-data-fixture-module": "dev-master"
     },
     "autoload": {
         "psr-4": {

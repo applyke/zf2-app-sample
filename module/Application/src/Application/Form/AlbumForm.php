@@ -5,7 +5,7 @@ namespace Application\Form;
 use Zend\Form\Element;
 use Zend\Form;
 use Zend\InputFilter\Factory as FilterFactory;
-use Zend\Hydrator\ClassMethods;
+use Application\Service\HydratorStrategyService;
 
 class AlbumForm extends ApplicationFormAbstract
 {
@@ -14,7 +14,7 @@ class AlbumForm extends ApplicationFormAbstract
     {
         parent::__construct($name, $options);
 
-        $this->setHydrator(new ClassMethods);
+        $this->setHydrator(new HydratorStrategyService);
         $this->setAttribute('method', 'post');
         $this->setAttribute('action', '');
         $this->setAttribute('class', 'form-horizontal');
@@ -26,21 +26,21 @@ class AlbumForm extends ApplicationFormAbstract
         }
 
         $this->add(new Form\Element\Text('title', array(
-            'label' => "title"
+            'label' => "Title"
         )));
         if (is_object($album)) {
             $this->get('title')->setValue($album->getTitle());
         }
 
         $this->add(new Form\Element\Text('code', array(
-            'label' => "code"
+            'label' => "Code"
         )));
         if (is_object($album)) {
             $this->get('code')->setValue($album->getCode());
         }
 
         $this->add(new Form\Element\Checkbox('status', array(
-            'label' => "Status",
+            'label' => "Activity",
             'checked_value' => 1,
             'unchecked_value' => 0
         )));
@@ -96,7 +96,6 @@ class AlbumForm extends ApplicationFormAbstract
                         'max' => 50
                     )),
                 )
-
             ),
             'status' => array(
                 'required' => true,

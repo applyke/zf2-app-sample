@@ -5,12 +5,14 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Application\ApplicationTraits\DoctrineEntityManagerAwareTrait;
 use Application\ApplicationTraits\PaginationAwareTrait;
+
 use Zend\View\Resolver;
 
 abstract class AbstractController extends AbstractActionController
 {
     use DoctrineEntityManagerAwareTrait;
     use PaginationAwareTrait;
+
 
     protected $pageLimit = 10;
 
