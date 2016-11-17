@@ -8,7 +8,7 @@ use Zend\Log\Writer as LogWriter;
 use Zend\Console\Request as ConsoleRequest;
 use Zend\Log\Logger;
 
- class LoggerServiceFactory implements FactoryInterface
+class LoggerServiceFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

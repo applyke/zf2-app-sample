@@ -10,7 +10,6 @@ use Application\ApplicationTraits\DoctrineEntityManagerAwareTrait;
 
 class LoadGalleryData implements FixtureInterface
 {
-    //   ./vendor/bin/doctrine-module data-fixture:import
     use DoctrineEntityManagerAwareTrait;
 
     public function load(ObjectManager $manager)
@@ -23,7 +22,7 @@ class LoadGalleryData implements FixtureInterface
             'The Good Old Days'
         );
         $albumCodes = array(
-            'one', 'two', 'tree', 'four', 'five'
+            'one', 'two', 'three', 'four', 'five'
         );
         for ($i = 0; $i < 5; $i++) {
             $album = new Album();
@@ -35,7 +34,7 @@ class LoadGalleryData implements FixtureInterface
 
         $albumRepository = $manager->getRepository('\Application\Entity\Album');
         $albums = $albumRepository->findAll();
-        $pathToImage = '/public/images/2d.jpg';
+        $pathToImage = '/img/2d.jpg';
         $counter = 5;
         foreach ($albums as $album) {
             for ($i = 0; $i < $counter; $i++) {

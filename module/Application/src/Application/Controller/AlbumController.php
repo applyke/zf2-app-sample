@@ -1,9 +1,4 @@
 <?php
-/**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace Application\Controller;
 
@@ -65,30 +60,13 @@ class AlbumController extends AbstractController
     public function detailsAction()
     {
         $id = $this->params()->fromRoute('id');
-        $entityManager = $this->getEntityManager();
-        /** @var \Application\Repository\AlbumRepository $albumRepository */
-        $albumRepository = $entityManager->getRepository('\Application\Entity\Album');
-        /** @var \Application\Repository\ImageRepository $imageRepository */
-        $imageRepository = $entityManager->getRepository('\Application\Entity\Image');
+        $albumService = $this->getAlbumService();
 
-        $album = $albumRepository->findOneById((int)$id);
-        if (!$album) {
+        $detailsImages = $albumService->getImagesForAlbumId($id);
+        if ($detailsImages === false) {
             return $this->notFound();
         }
-        $paginationService = $this->getPaginationService();
-        $filter = $paginationService->createFilter($this->getUrl());
-        $images = $imageRepository->findByWithTotalCount(array('album_id' => $album->getId()), array('id' => 'ASC'), $this->getPageLimit(), $this->getPageOffset(), $this->getFilterDataFromRequest($filter));
-        $imagesTotalCount = $imageRepository->getTotalCount();
-
-        return new ViewModel(
-            array(
-                'album' => $album,
-                'images' => $images,
-                'paginator' => $paginationService->createPaginator($imagesTotalCount, $this->getPageNumber(), $this->getPageLimit()),
-                'filter' => $filter,
-            )
-        );
-
+        return new ViewModel($detailsImages);
     }
 
     public function deleteAction()

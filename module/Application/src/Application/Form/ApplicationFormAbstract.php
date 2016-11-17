@@ -40,7 +40,4 @@ class ApplicationFormAbstract extends Form\Form
         }
         $this->backBtnUrl = $url;
     }
-
-   
-
 }

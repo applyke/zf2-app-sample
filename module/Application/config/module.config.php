@@ -1,36 +1,29 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace Application;
 
 return array(
     'router' => array(
         'routes' => array(
-            'home' => [
+            'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => [
-                    'route'    => '/',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Application\Controller\Album',
-                        'action'     => 'index',
-                    ),
-                ],
-            ],
-            'album' => array(
-                'type' =>  'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
                     'route' => '/',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller' => 'Application\Controller\Album',
-                        'action'     => 'index',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'album' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route' => '/album',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller' => 'Application\Controller\Album',
+                        'action' => 'index',
                     ),
                 ),
                 'may_terminate' => true,
@@ -53,11 +46,10 @@ return array(
                 ),
             ),
             'api' => array(
-                'type' =>  'Zend\Mvc\Router\Http\Literal',
+                'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
                     'route' => '/api/v1',
-                    'constraints' => array(
-                    ),
+                    'constraints' => array(),
                     'defaults' => array(
                         '__NAMESPACE__' => 'Application\Controller\Api',
                     ),
@@ -73,8 +65,7 @@ return array(
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'id' => '[0-9]+',
                             ),
-                            'defaults' => array(
-                            ),
+                            'defaults' => array(),
                         ),
                     ),
                 ),
@@ -90,12 +81,12 @@ return array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
             'logger' => 'Application\Factory\Service\LoggerServiceFactory',
             'pagination' => 'Application\Factory\Service\PaginationServiceFactory',
-
+            'album' => 'Application\Factory\Service\AlbumServiceFactory',
         ),
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Error' => Controller\Admin\ErrorController::class,
+            'Application\Controller\Error' => Controller\ErrorController::class,
         ),
         'factories' => array(
             'Application\Controller\Album' => Factory\Controller\AlbumFactory::class,
@@ -122,23 +113,20 @@ return array(
             )
         ),
         'fixture' => array(
-            'Application_fixture' => __DIR__ . '/../src/Application/Fixture',
+            'Application_fixture' => __DIR__ . '/../test/Fixture',
         )
     ),
     'view_manager' => [
         'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
+        'display_exceptions' => true,
+        'doctype' => 'HTML5',
+        'not_found_template' => 'error/404',
+        'exception_template' => 'error/index',
         'template_map' => [
-            'album/pagination'        => __DIR__ . '/../view/application/includes/pagination.phtml',
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'layout/404'              => __DIR__ . '/../view/error/404.phtml',
-            'layout/error'            => __DIR__ . '/../view/error/error.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
-
+            'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'error/404' => __DIR__ . '/../view/error/404.phtml',
+            'layout/404' => __DIR__ . '/../view/error/404.phtml',
+            'layout/error' => __DIR__ . '/../view/error/error.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',

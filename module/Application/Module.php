@@ -1,9 +1,4 @@
 <?php
-/**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace Application;
 
@@ -42,17 +37,11 @@ class Module
         \Zend\Log\Logger::registerErrorHandler($serviceManager->get('logger'));
         \Zend\Log\Logger::registerExceptionHandler($serviceManager->get('logger'));
 
-//        $sessionConfig = new \Zend\Session\Config\SessionConfig();
-//        $sessionConfig->setOptions($config['session']);
-//        $sessionManager = new \Zend\Session\SessionManager($sessionConfig);
-//        \Zend\Session\Container::setDefaultManager($sessionManager);
-
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         $request = $e->getRequest();
         if (!$request instanceof \Zend\Console\Request) {
-           // define('HOST', $request->getUri()->getHost());
             $eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'onRoute'), -1);    // -1 - very low priority - system callback will be run first
             $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'onDispatchError'), -1);
             $eventManager->attach(MvcEvent::EVENT_RENDER_ERROR, array($this, 'onRenderError'), -1);
@@ -77,6 +66,7 @@ class Module
 
     public function onRenderError(MvcEvent $e)
     {
+        return $this->handleErrors($e);
     }
 
     public function onDispatchError(MvcEvent $e)
@@ -85,17 +75,16 @@ class Module
         if (!$request instanceof \Zend\Console\Request) {
             $statusCode = $e->getApplication()->getResponse()->getStatusCode();
             if ($statusCode == 404) {
-                if (strpos($request->getUri(), '/album/') === false) {
+                if (strpos($request->getUri(), '/api/') === false) {
                     $e->getViewModel()->setTemplate('layout/404');
-
                     $routeMatch = $e->getRouteMatch();
-
 
                     if (is_object($routeMatch)) {
                         // render 404 error page
                         return $routeMatch
-                            ->setParam('controller', '"Application\Controller\Admin\ErrorController')
-                            ->setParam('action', 'error404');
+                            ->setParam('controller', 'Error')
+                            ->setParam('action', 'error404')
+                            ->setParam('__NAMESPACE__', 'Application\Controller');
                     }
                 }
             } else {
@@ -106,6 +95,7 @@ class Module
 
     public function onFinish(MvcEvent $e)
     {
+        $e->getApplication()->getServiceManager();
     }
 
     private function handleErrors(MvcEvent $e, $explain = '')
@@ -139,11 +129,12 @@ class Module
             if (is_object($routeMatch)) {
                 // render 404 error page
                 return $e->getRouteMatch()
-                    ->setParam('controller', '"Application\Controller\Admin\ErrorController')
-                    ->setParam('action', 'error');
+                    ->setParam('controller', 'Error')
+                    ->setParam('action', 'error')
+                    ->setParam('__NAMESPACE__', 'Application\Controller');
             }
         }
     }
-  
-  
+
+
 }

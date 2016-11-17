@@ -9,9 +9,10 @@ use Application\Controller\Api\AlbumsController as Controller;
 
 class AlbumsFactory implements FactoryInterface
 {
+
     public function createService(ServiceLocatorInterface $controllerManager)
     {
-        /* @var ControllerManager $controllerManager*/
+        /* @var ControllerManager $controllerManager */
         $serviceManager = $controllerManager->getServiceLocator();
         /** @var \Doctrine\Orm\EntityManager $entityManager */
         $entityManager = $serviceManager->get('doctrine.entitymanager.orm_default');

@@ -11,10 +11,10 @@ class Repository extends EntityRepository
     protected $totalCount;
 
     /**
-     * @param array      $criteria
+     * @param array $criteria
      * @param array|null $orderBy
-     * @param int|null   $limit
-     * @param int|null   $offset
+     * @param int|null $limit
+     * @param int|null $offset
      * @return array
      */
     public function findByWithTotalCount(array $criteria, array $orderBy = null, $limit = null, $offset = null, array $filter = null)
@@ -34,9 +34,9 @@ class Repository extends EntityRepository
             }
         }
         $sql = $qb->getQuery()->getSQL();
-        $query = $qb->getQuery()->setFirstResult((int) $offset);
+        $query = $qb->getQuery()->setFirstResult((int)$offset);
         if ($limit) {
-            $query->setMaxResults((int) $limit);
+            $query->setMaxResults((int)$limit);
         }
 
         $dataPaginator = new Paginator($query, $fetchJoinCollection = true);
@@ -77,7 +77,7 @@ class Repository extends EntityRepository
                     } else {
                         $param = ':param_e_' . $k . '_' . $type;
                         if (is_numeric($v)) {
-                            $exprArr[$type][] = $qb->expr()->eq('e.' . $k, (int) $v);
+                            $exprArr[$type][] = $qb->expr()->eq('e.' . $k, (int)$v);
                         } else if (is_array($v)) {
                             $exprArr[$type][] = $qb->expr()->in('e.' . $k, array_map('intval', $v));
                         } else {
@@ -104,5 +104,4 @@ class Repository extends EntityRepository
 
         return $this;
     }
-
 }

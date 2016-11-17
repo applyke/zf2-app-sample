@@ -58,7 +58,6 @@ class AlbumForm extends ApplicationFormAbstract
         ));
 
         $inputFilter = $this->inputFilter($options);
-
         $this->setInputFilter($inputFilter);
     }
 

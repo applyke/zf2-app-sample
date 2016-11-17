@@ -9,7 +9,7 @@ class PaginationService
     use PaginationAwareTrait;
 
     protected $pageLimit = 10;
-
+    protected $renderer;
 
     public function createPaginator($count = 0, $pageNumber, $pageLimit)
     {
@@ -24,13 +24,6 @@ class PaginationService
         return $paginator;
     }
     
-    public function createFilter($url)
-    {
-        $filter = new \Application\Service\FilterService();
-        $filter->setUrl($url);
-        return $filter;
-    }
-
     public function setRenderer(\Zend\View\Renderer\PhpRenderer $phpRenderer)
     {
         $this->renderer = $phpRenderer;

@@ -44,7 +44,6 @@ class AlbumEntityTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('testCode', $this->album->getCode());
     }
 
-
     /**
      * @covers Application\Entity\Album::setStatus
      * @covers Application\Entity\Album::getStatus
@@ -54,15 +53,4 @@ class AlbumEntityTest extends \PHPUnit_Framework_TestCase
         $this->album->setStatus(1);
         $this->assertEquals(1, $this->album->getStatus());
     }
-//    public function testInputFiltersAreSetCorrectly()
-//    {
-//        $album = new AlbumEntity();
-//
-//        $inputFilter = $album->getInputFilter();
-//
-//        $this->assertSame(3, $inputFilter->count());
-//        $this->assertTrue($inputFilter->has('title'));
-//        $this->assertTrue($inputFilter->has('code'));
-//        $this->assertTrue($inputFilter->has('status'));
-//    }
 }

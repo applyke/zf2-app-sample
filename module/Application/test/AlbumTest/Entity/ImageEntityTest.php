@@ -43,8 +43,7 @@ class ImageEntityTest extends \PHPUnit_Framework_TestCase
         $this->image->setUrl('https://test/url');
         $this->assertEquals('https://test/url', $this->image->getUrl());
     }
-
-
+    
     /**
      * @covers Application\Entity\Image::setWidth
      * @covers Application\Entity\Image::getWidth

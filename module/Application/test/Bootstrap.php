@@ -13,12 +13,12 @@ chdir(__DIR__);
 class Bootstrap
 {
     protected static $serviceManager;
+    protected static $entityManager;
     protected static $config;
     protected static $bootstrap;
 
     public static function init()
     {
-        // Load the user-defined test configuration file, if it exists; otherwise, load
         if (is_readable(__DIR__ . '/TestConfig.php')) {
             $testConfig = include __DIR__ . '/TestConfig.php';
         } else {
@@ -45,9 +45,13 @@ class Bootstrap
         $config = ArrayUtils::merge($baseConfig, $testConfig);
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
         static::$serviceManager = $serviceManager;
         static::$config = $config;
+    }
+
+    public static function getEntityManager()
+    {
+        return static::$entityManager;
     }
 
     public static function chroot()

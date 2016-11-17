@@ -29,7 +29,7 @@ class Image extends EntityAbstract
 
     /** @ORM\Column(type="integer") */
     protected $height;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Album", inversedBy="album_id")
      * @ORM\JoinColumn(name="album_id", referencedColumnName="id", onDelete="CASCADE")

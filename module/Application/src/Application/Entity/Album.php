@@ -18,7 +18,7 @@ class Album extends EntityAbstract
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=128, unique=true) */
+    /** @ORM\Column(type="string", length=128) */
     protected $title;
 
     /** @ORM\Column(type="string", length=128) */

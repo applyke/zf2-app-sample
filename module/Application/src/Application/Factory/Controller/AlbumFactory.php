@@ -11,15 +11,15 @@ class AlbumFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $controllerManager)
     {
-        /* @var ControllerManager $controllerManager*/
+        /* @var ControllerManager $controllerManager */
         $serviceManager = $controllerManager->getServiceLocator();
 
         /** @var \Doctrine\Orm\EntityManager $entityManager */
         $entityManager = $serviceManager->get('doctrine.entitymanager.orm_default');
         $controller = new Controller();
         $controller->setEntityManager($entityManager);
-        $paginationService = $serviceManager->get('pagination');
-        $controller->setPaginationService($paginationService);
+        $albumService = $serviceManager->get('album');
+        $controller->setAlbumService($albumService);
         return $controller;
     }
 }

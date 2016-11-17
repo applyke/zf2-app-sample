@@ -27,11 +27,6 @@ class AbstractRestfulController extends \Zend\Mvc\Controller\AbstractRestfulCont
         return new JsonModel(parent::delete($id));
     }
 
-//    public function deleteList()
-//    {
-//        return new JsonModel(parent::deleteList());
-//    }
-
     public function get($id)
     {
         return new JsonModel(parent::get($id));
@@ -77,33 +72,33 @@ class AbstractRestfulController extends \Zend\Mvc\Controller\AbstractRestfulCont
         return new JsonModel(parent::notFoundAction());
     }
 
-//    public function getPayload($key = null, $default = null)
-//    {
-//        $contentType = $this->getRequest()->getHeaders()->get('content-type');
-//        $isJsonPayload = (is_object($contentType) && $contentType->getFieldValue() == 'application/json');
-//        if (!$isJsonPayload) {
-//            /** @see \Zend\Mvc\Controller\Plugin\Params */
-//            return $this->params()->fromPost($key, $default);
-//        } else {
-//            static $jsonArray;
-//            if (!is_array($jsonArray)) {
-//                try {
-//                    $jsonArray = \Zend\Json\Json::decode($this->getRequest()->getContent(), \Zend\Json\Json::TYPE_ARRAY);
-//                    if (!is_array($jsonArray)) {
-//                        throw new \Zend\Json\Exception\RuntimeException('Decoding failed');
-//                    }
-//                } catch (\Exception $e) {
-//                    http_response_code(400);
-//                    exit('{"success":false,"errors":{"json":"JSON decoding error"}}');
-//                }
-//            }
-//            if ($key) {
-//                return isset($jsonArray[$key]) ? $jsonArray[$key] : $default;
-//            } else {
-//                return $jsonArray;
-//            }
-//        }
-//    }
+    public function getPayload($key = null, $default = null)
+    {
+        $contentType = $this->getRequest()->getHeaders()->get('content-type');
+        $isJsonPayload = (is_object($contentType) && $contentType->getFieldValue() == 'application/json');
+        if (!$isJsonPayload) {
+            /** @see \Zend\Mvc\Controller\Plugin\Params */
+            return $this->params()->fromPost($key, $default);
+        } else {
+            static $jsonArray;
+            if (!is_array($jsonArray)) {
+                try {
+                    $jsonArray = \Zend\Json\Json::decode($this->getRequest()->getContent(), \Zend\Json\Json::TYPE_ARRAY);
+                    if (!is_array($jsonArray)) {
+                        throw new \Zend\Json\Exception\RuntimeException('Decoding failed');
+                    }
+                } catch (\Exception $e) {
+                    http_response_code(400);
+                    exit('{"success":false,"errors":{"json":"JSON decoding error"}}');
+                }
+            }
+            if ($key) {
+                return isset($jsonArray[$key]) ? $jsonArray[$key] : $default;
+            } else {
+                return $jsonArray;
+            }
+        }
+    }
 
     protected function sendErrorResponse(array $errors = array(), $statusCode = 200)
     {
@@ -129,7 +124,7 @@ class AbstractRestfulController extends \Zend\Mvc\Controller\AbstractRestfulCont
         );
     }
 
-    protected function getFormErrors(\Application\Form\ApplicationForm $form)
+    protected function getFormErrors(\Application\Form\ApplicationFormAbstract $form)
     {
         $result = array();
         $data = $form->getMessages();

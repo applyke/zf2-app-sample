@@ -1,21 +1,22 @@
 <?php
-
-
 namespace Application;
+
+$applicationEnv = getenv('APP_ENV') ?: 'production';
 
 return array(
     'modules' => array(
-        'Application',
         'DoctrineModule',
+        'DoctrineDataFixtureModule',
         'DoctrineORMModule',
+        'Application',
     ),
     'module_listener_options' => array(
-        'config_glob_paths'    => array(
-            'module/Application/test/AlbumTest/{,*.}{global,local}.php',
+        'config_glob_paths' => array(
+            sprintf('config/autoload/{,*.}{global,%s,local}.php', $applicationEnv)
         ),
         'module_paths' => array(
             'module',
             'vendor',
         ),
     ),
-  );
+);

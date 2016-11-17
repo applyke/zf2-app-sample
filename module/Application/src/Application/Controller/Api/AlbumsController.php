@@ -2,24 +2,24 @@
 namespace Application\Controller\Api;
 
 use Zend\XmlRpc\Client;
-use Application\Entity\Album;
-use Application\Entity\Image;
+use Application\Service\PrepareObjectService;
+
 class AlbumsController extends AbstractRestfulController
 {
-
-    //GET all images by Album id
+    //GET all images by Album id.  /api/v1/albums
     public function get($id)
     {
-             $entityManager = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
         /** @var \Application\Repository\AlbumRepository $albumRepository */
         $albumRepository = $entityManager->getRepository('\Application\Entity\Album');
         $album = $albumRepository->findOneById($id);
-        if($album) {
+        if ($album) {
             $imageRepository = $entityManager->getRepository('\Application\Entity\Image');
             $images = $imageRepository->findBy(array('album_id' => $id));
+            $prepareObject = new PrepareObjectService();
             if ($images) {
                 foreach ($images as $image) {
-                    $imageList[] = $this->prepareImageObject($image);
+                    $imageList[] = $prepareObject->prepareImageObject($image);
                 }
                 return $this->sendSuccessResponse($imageList);
             }
@@ -28,7 +28,7 @@ class AlbumsController extends AbstractRestfulController
         return $this->sendErrorResponse(array('albums' => 'Albums not found'));
     }
 
-    //GET all albums with max 10 images for albums list
+    //GET all albums with max 10 images for albums list.  /api/v1/albums/{:id}
     public function getList()
     {
         $entityManager = $this->getEntityManager();
@@ -37,9 +37,10 @@ class AlbumsController extends AbstractRestfulController
         $albums = $albumRepository->findAll();
         $albumList = array();
         if ($albums) {
+            $prepareObject = new PrepareObjectService();
             foreach ($albums as $album) {
                 $albumList[] = array(
-                    'album' => $this->prepareAlbumObject($album),
+                    'album' => $prepareObject->prepareAlbumObject($album),
                     'images' => $this->getImageListAction($album->getId())
                 );
             }
@@ -55,48 +56,18 @@ class AlbumsController extends AbstractRestfulController
         $imageRepository = $entityManager->getRepository('\Application\Entity\Image');
         $images = $imageRepository->findBy(array('album_id' => $id));
         if ($images) {
-            $count = count($images);
-            if (count($images) > 10) {
-                $start = count($images) - 10;
-            } else {
-                $start = 0;
-            }
-            for ($i = $start; $i < $count; $i++) {
+            $imageList = array();
+            $imageListTmp = array_slice($images, -10);
+            foreach ($imageListTmp as $image)
                 $imageList[] = array(
-                    'id' => $images[$i]->getId(),
-                    'path' => $images[$i]->getPath(),
-                    'url' => $images[$i]->getUrl(),
-                    'width' => $images[$i]->getWidth(),
-                    'height' => $images[$i]->getHeight(),
-                    'created' => $images[$i]->getCreated(),
+                    'id' => $image->getId(),
+                    'path' => $image->getPath(),
+                    'url' => $image->getUrl(),
+                    'width' => $image->getWidth(),
+                    'height' => $image->getHeight(),
                 );
-            }
             return $imageList;
         }
         return $this->sendErrorResponse(array('albums' => 'This album doesn\'t have images'));
     }
-
-    protected function prepareAlbumObject(\Application\Entity\Album $album)
-    {
-        return array(
-            'id' => $album->getId(),
-            'title' => $album->getTitle(),
-            'code' => $album->getCode(),
-            'state' => $album->getState(),
-            'created' => $album->getCreated(),
-        );
-    }
-
-    protected function prepareImageObject(\Application\Entity\Image $image)
-    {
-        return array(
-            'id' => $image->getId(),
-            'path' => $image->getPath(),
-            'url' => $image->getUrl(),
-            'width' => $image->getWidth(),
-            'height' => $image->getHeight(),
-            'created' => $image->getCreated(),
-        );
-    }
-
 }
