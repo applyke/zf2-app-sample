@@ -4,7 +4,7 @@ namespace Application\ApplicationTraits;
 
 trait LoggerAwareTrait
 {
-    /** @var \Zend\Log\LoggerInterface  */
+    /** @var \Zend\Log\LoggerInterface */
     protected $logger;
 
     public function setLogger(\Zend\Log\LoggerInterface $logger)
@@ -17,5 +17,4 @@ trait LoggerAwareTrait
     {
         return $this->logger;
     }
-
 }

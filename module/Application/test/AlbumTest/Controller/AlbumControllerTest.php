@@ -21,14 +21,13 @@ class AlbumControllerTest extends AbstractHttpControllerTestCase
             include __DIR__ . '/../../TestConfig.php'
         );
         parent::setUp();
-
         shell_exec('cd ../../../');
         shell_exec('./vendor/bin/doctrine-module orm:schema-tool:update --force');
         shell_exec('export APP_ENV=\'development\'');
         shell_exec('./vendor/bin/doctrine-module data-fixture:import');
     }
 
-    public function testTestAction()
+    public function testIndexAction()
     {
         $this->dispatch('/album');
         $this->assertResponseStatusCode(200);

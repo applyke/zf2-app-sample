@@ -61,7 +61,6 @@ class AlbumForm extends ApplicationFormAbstract
         $this->setInputFilter($inputFilter);
     }
 
-
     protected function inputFilter($options)
     {
         $factory = new FilterFactory();
@@ -107,5 +106,4 @@ class AlbumForm extends ApplicationFormAbstract
             )
         ));
     }
-
 }

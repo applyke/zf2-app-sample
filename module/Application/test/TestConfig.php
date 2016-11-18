@@ -1,5 +1,5 @@
 <?php
-namespace Application;
+namespace ApplicationTest;
 
 $applicationEnv = getenv('APP_ENV') ?: 'production';
 

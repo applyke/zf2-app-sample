@@ -5,11 +5,11 @@ namespace Application\ApplicationTraits;
 trait AlbumAwareTrait
 {
     /** @var  \Application\Service\AlbumService */
-    protected $albumService;
+    protected $album;
 
     public function setAlbumService(\Application\Service\AlbumService $albumService)
     {
-        $this->albumService = $albumService;
+        $this->album = $albumService;
         return $this;
     }
 
@@ -18,7 +18,6 @@ trait AlbumAwareTrait
      */
     protected function getAlbumService()
     {
-        return $this->albumService;
+        return $this->album;
     }
-
 }
